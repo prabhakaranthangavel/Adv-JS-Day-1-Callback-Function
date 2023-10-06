@@ -1,0 +1,274 @@
+Contents:
+
+1.Single Thread & Multi Thread language
+2.Synchronous & Asynchonronus function
+3.Callback
+4.Callback Properties - Call Stack, WebAPI, Event Loop, Queue
+5.Session reference  - http://latentflip.com/loupe/
+6.Pain of callback or Callback hell
+
+*************************************************************************************************************************
+
+1.Single Thread & Multi Thread language
+
+what is Single Thread & Multi Thread?
+
+===>Single threaded can execute single task at a time.
+    ஒரே நேரத்தில் ஒரு Task மட்டும் execute ஆகும்.
+    Example:Swimming நீச்சல் அடிக்கும் போது நாம் நீச்சல் மட்டுமே செய்ய முடியும்.மற்ற எந்த வேலையும் செய்ய முடியாது.
+    Example:Javascript
+    
+===>Multi threaded can execute multi task at a time.
+    ஒரே நேரத்தில் எண்ணற்ற Task களை execute ஆக்கும்.
+    Example:சாப்பிட்டுக் கொண்டிருக்கும்போது TV பார்ப்பது,class attend செய்வது,mobile ல் பேசுவது போன்ற எண்ணற்ற வேலைகளை ஒரே நேரத்தில் செய்யலாம்.
+    Example:C,C++,Java
+
+*************************************************************************************************************************
+
+2.Synchronous & Asynchonronus function
+
+what is Synchronous & Asynchronous?
+
+===>It will execute all the code line by line in the order in which it is written.
+    Synchronous என்பது 10 program இருந்தாலும் line by line ஆக execute ஆகும்.
+    Example:Java
+
+===>Example:
+
+    console.log("app is started")
+    setTimeout(()=> console.log("loading..."),2000)
+    setTimeout(()=> console.log("app completed"),5000)
+    console.log("Under process")     //(1)app is started   (2)loading...   (3)app completed   (4)Under process
+
+
+
+===>It will do the task without waiting for a task to complete its execution. 
+    Asynchonronus என்பது 10 program ல் ஒரு program க்குள் for or if-else LOOP இருந்தால் எந்த ஒரு function காகவும் wait செய்யாமல் மற்ற ஒன்பது programமும் execute ஆகிவிடும்.
+    Example:Javascript
+
+===>Example:
+
+    console.log("app is started")
+    setTimeout(()=> console.log("loading..."),2000)
+    setTimeout(()=> console.log("app completed"),5000)
+    console.log("Under process")     //(1)app is started   (2)Under process    (3)loading...   (4)app completed
+
+
+===>Summary:
+
+    ===>Java is a  Multi Thread language & Synchronous function
+    
+    ===>Javascript is a  Single Thread language & Asynchronous function
+
+*************************************************************************************************************************
+
+3.Callback
+
+what is callback?
+
+===>It is a function which uses one more function as a parameter.
+    ஒரு parameterக்குள் ஒரு function ஐ pass செய்தால் அதை callback function எனலாம்.
+    
+===>Example:SetTimeOut & MRF & AddEventListener
+
+===>Normal Example: 
+
+    console.log("first"); 
+    console.log("second");
+    console.log("third");  // first second third
+
+===>Callback using setTimeout Example 1: 
+
+    console.log("first");
+    setTimeout(() =>console.log("second"),2000);     //===>setTimeout is a Callback function
+    console.log("third");       // first third second  ===>setTimeout 2000 m/s
+
+
+
+===>Callback using setTimeout Example 2: 
+
+    console.log("app is started")
+    setTimeout(()=> console.log("loading..."),2000)
+    setTimeout(()=> console.log("app completed"),5000)
+    console.log("Under process")     //(1)app is started   (2)Under process   (3)loading...   (4)app completed under process
+
+
+
+===>Callback using function Example: 
+
+    var complete =()=>{      ===>complete is function name
+        console.log("Finish")
+    }
+    var add = (abc)=>{       ===>add is function name (callback)   abc ===>destructure method
+        var x = 2;
+        var y = 3;
+        console.log("sum is : ", x+y)
+        abc();
+    }
+    add(complete);          ===>func(func) function call     //sum is :  5     Finish
+
+
+Callback using function Not a Prefered Method: JUST UNDERSTANDING
+
+    var complete =()=>{      
+        console.log("Finish")
+    }
+    var add = ()=>{      
+        var x = 2;
+        var y = 3;
+        console.log("sum is : ", x+y)
+        complete();
+    }
+    add(complete);         //sum is :  5     Finish
+
+*************************************************************************************************************************
+
+4.Callback Properties - Call Stack, WebAPI, Event Loop, Queue
+
+5.Refer to http://latentflip.com/loupe/
+
+5.1 Refer to Screenshot Adv JS Day 1 folder
+
+
+
+===>Example for Call Stack, WebAPI, Event Loop, Queue:
+
+    console.log("a")
+    setTimeout(function(){
+        console.log("b")
+    },3000)
+    console.log("c")             ////a c b   ===>Since b,5000 m/s printed
+
+
+
+what is Call Stack?
+
+===>It is place in browser where it keeps track of the function that has to be called in the program. 
+
+===>It will execute whatever the statements inside it.
+   
+===>Callstack ஆனது உள்ளே வரக்கூடிய elements ஐ one by one ஆக line ஆக வைக்கும்.
+    Execute செய்ய பயன்படுகிறது.
+    ஒருவேளை எந்த condition ம் இல்லை என்றால் நேரடியாக output ஐ print செய்யும்.
+
+===>ஏதேனும் condition கொடுக்கப்பட்டிருந்தால் அந்த element ஐ WEB API க்கு நகர்த்தும் அல்லது தள்ளிவிடும்.
+
+                ***************************************************************** 
+
+what is WebAPI?
+
+===>it is the place where the Asynchronous operations are actually executed.
+
+===>Web API என்பது waiting list & Asynchronous operations ஐ குறிக்கும்.
+
+===>அதாவது கொடுக்கப்பட்ட condition ஆனது நிறைவேறும் வரை அந்த element ஐ வைத்து காத்திருக்கும்.
+   நிறைவேறினால் அல்லது satisfied செய்தால் அந்த element ஐ Queue க்கு நகர்த்தும்.
+
+                ***************************************************************** 
+
+what is Queue?
+
+===>Queue is a datastructure , FIFO  
+
+===>it stores the async function which has to be executed next.
+
+===>Queue என்பது அடுத்து என்ன print ஆக வேண்டுமோ அதை Queueல் store செய்து வைத்திருக்கும்.
+    முதலில் எந்த element வருகிறதோ அதைத்தான் output ஆக print செய்யும்.இதை FIFO என்கிறோம்.
+
+                ***************************************************************** 
+
+what is Event Loop?
+
+===>It is between call stack as well as the event queue.
+    The main role of the event loop is to check whether the call stack is empty or not.
+    if it is empty it will push the code from queue and pass it to call stack
+    the call stack executes the function
+
+===>Event loop என்பது Queue ல் உள்ள element ஐ CallStack க்கு push செய்வதுதான் இதனுடைய வேலை ஆகும்.
+    CallStack ல் element ஆனது empty ஆகும் வரை wait செய்யும்.
+
+*************************************************************************************************************************
+
+6.Pain of callback or Callback hell
+
+===>Hell means நரகம்.
+
+===>ஒரு 50 line உள்ள program ல் உள்ள அனைத்தையும் setTimeout கொடுத்தால் console ல் எதுவுமே print ஆகாது.
+    Time முடிந்த பிறகுதான் print அல்லது execute ஆகும்.
+    இதைத்தான் Callback Hell என்று அழைக்கிறோம்.
+
+===>ஒரு function க்குள் nested function ஆக வருவதுதான் Callback hell Function என்போம்.
+
+===>Callback Hell என்பதை 
+                        ***Disadvantages of Callback***
+                        ***Pain Of Callback***
+                        ***Drawback Of Callback***
+    என்று பல்வேறு பெயர்களாக அழைக்கிறோம்.
+
+===>Callback Hell ஐ overcome செய்ய வந்தது தான் Promise(ES6) ஆகும்.                           
+
+===>Syntax:
+
+    function a1(){
+        function a2(){
+            function a3(){
+                console.log("hello")
+            }
+        }
+    }
+
+===>Example:
+
+    setTimeout(() => {
+    console.log("10");
+    document.getElementById("display").innerText = "10";
+  
+    setTimeout(() => {
+      console.log("9");
+      document.getElementById("display").innerText = "9";
+  
+      setTimeout(() => {
+        console.log("8");
+        document.getElementById("display").innerText = "8";
+  
+        setTimeout(() => {
+          console.log("7");
+          document.getElementById("display").innerText = "7";
+  
+          setTimeout(() => {
+            console.log("6");
+            document.getElementById("display").innerText = "6";
+  
+            setTimeout(() => {
+              console.log("5");
+              document.getElementById("display").innerText = "5";
+  
+              setTimeout(() => {
+                console.log("4");
+                document.getElementById("display").innerText = "4";
+  
+                setTimeout(() => {
+                  console.log("3");
+                  document.getElementById("display").innerText = "3";
+                  setTimeout(() => {
+                    console.log("2");
+                    document.getElementById("display").innerText = "2";
+                    setTimeout(() => {
+                      console.log("1");
+                      document.getElementById("display").innerText = "1";
+                      setTimeout(() => {
+                        document.getElementById("display").innerText =
+                          "Happy Raksha Bandan ✨";
+                      },1000);//wish
+                    }, 1000);//1
+                  }, 1000);//2
+                }, 1000);//3
+              }, 1000); //4
+            }, 1000); //5
+          }, 1000); //6
+        }, 1000);//7
+      }, 1000); //8
+    }, 1000); //9
+  }, 1000);  //10
+
+*************************************************************************************************************************
